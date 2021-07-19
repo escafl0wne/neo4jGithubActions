@@ -17,5 +17,5 @@ jobs:
       - name: Fetch newest
         uses: githubocto/flat@v3
         with:
-          http_url: https://lobsters.rs/newest.json
+          http_url: https://lobste.rs/newest.json
           downloaded_filename: newest.json
