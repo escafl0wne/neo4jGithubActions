@@ -4,18 +4,17 @@ on:
   push:
     paths:
     - .github/workflows/lobsters.yml
-workflow_dispatch:
- schedule:
-  - cron: '$/60 * * * *'
+  workflow_dispatch:
+  schedule:
+    - cron: '*/60 * * * *'
   
-  
-  jobs: 
-    scheduled:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out repo
+jobs: 
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
         uses: actions/checkout@v2
-        - name: Fetch newest
+      - name: Fetch newest
         uses: githubocto/flat@v2
         with:
           http_url: https://lobsters.rs/newest.json
