@@ -20,7 +20,7 @@ jobs:
           http_url: https://lobste.rs/newest.json
           downloaded_filename: newest.json
       - name: Neo4j import
-        uses: johnymontana/flat-graph@v1.1
+        uses: johnymontana/flat-graph@v1.2
         with:
           neo4j-user: ${{secrets.NEO4J_USER}}
           neo4j-password: ${{secrets.NEO4J_PASSWORD}}
