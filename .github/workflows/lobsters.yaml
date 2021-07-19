@@ -4,8 +4,7 @@ on:
   push:
     paths:
     - .github/workflows/lobsters.yml
-    
- workflows_dispatch:
+workflow_dispatch:
  schedule:
   - cron: '$/60 * * * *'
   
