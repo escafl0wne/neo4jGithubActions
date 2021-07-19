@@ -19,3 +19,28 @@ jobs:
         with:
           http_url: https://lobste.rs/newest.json
           downloaded_filename: newest.json
+      - name: Neo4j import
+        uses: johnymontana/flat-graph@v1.1
+        with:
+          neo4j-user: ${{secrets.NEO4J_USER}}
+          neo4j-password: ${{secrets.NEO4J_PASSWORD}}
+          neo4j-uri: ${{secrets.NEO4J_URI}}
+          filename: 'newest.json'
+          cypher-query: >
+              UNWIND $value AS article
+              MERGE (u:User {username: article.submitter_user.username})
+              MERGE (a:Article {id: article.short_id})
+              SET a.url           = article.url,
+                  a.id_url        = article.short_id_url,
+                  a.created_at    = article.created_at,
+                  a.title         = article.title,
+                  a.score         = article.score,
+                  a.flags         = article.flags,
+                  a.comment_count = article.comment_count,
+                  a.description   = article.description,
+                  a.comments_url  = article.comments_url
+              MERGE (u)-[:SUBMITTED]->(a)
+              WITH article, a
+              UNWIND article.tags AS tag
+              MERGE (t:Tag {name: tag})
+              MERGE (a)-[:HAS_TAG]->(t)  
