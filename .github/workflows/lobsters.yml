@@ -29,6 +29,12 @@ jobs:
           cypher-query: >
               UNWIND $value AS article
               MERGE (u:User {username: article.submitter_user.username})
+              SET u.created = DateTime(article.submitter_user.created_at),
+                  u.karma = article.submitter_user.karma,
+                  u.about = article.submitter_user.about,
+                  u.avatar = "https://lobste.rs" + article.submitter_user.about
+              MERGE (i:User {username:article.submitter_user.invited_by)user})
+              MERGE (i)<-[:INVITED_BY]-(u)
               MERGE (a:Article {id: article.short_id})
               SET a.url           = article.url,
                   a.id_url        = article.short_id_url,
