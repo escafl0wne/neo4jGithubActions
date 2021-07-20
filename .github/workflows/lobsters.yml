@@ -32,7 +32,7 @@ jobs:
               SET u.created = DateTime(article.submitter_user.created_at),
                   u.karma = article.submitter_user.karma,
                   u.about = article.submitter_user.about,
-                  u.avatar = "https://lobste.rs" + article.submitter_user.about
+                  u.avatar = "https://lobste.rs" + article.submitter_user.avatar_url
               MERGE (i:User {username:article.submitter_user.invited_by)user})
               MERGE (i)<-[:INVITED_BY]-(u)
               MERGE (a:Article {id: article.short_id})
