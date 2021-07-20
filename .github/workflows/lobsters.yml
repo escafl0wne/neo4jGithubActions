@@ -31,7 +31,7 @@ jobs:
               MERGE (u:User {username: article.submitter_user.username})
                 SET u.created = DateTime(article.submitter_user.created_at),
                     u.karma = article.submitter_user.karma,
-                    u.about = article.submitter_user.about,
+                    u.about = apoc.convert.toString(article.submitter_user.about),
                     u.avatar = "https://lobste.rs" + article.submitter_user.avatar_url
               MERGE (i:User {username:article.submitter_user.invited_by_user})
               MERGE (i)<-[:INVITED_BY]-(u)
